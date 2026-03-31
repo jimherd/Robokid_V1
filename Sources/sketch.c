@@ -103,7 +103,7 @@ uint8_t   activity;
 //          pot 3 = 
 //
 
-#define   SKETCH_MODE_0_TIME_OUT   50
+
 
 uint8_t run_sketch_mode_0(void) 
 {
@@ -239,11 +239,7 @@ uint16_t      time, spiral_update_time;
 //          pot 3 = speed differential
 //
 
-#define   sketch_MODE_1_TIME_OUT      (30 * TICKS_IN_ONE_SECOND) 
-#define   NOS_PATTTERN_LINES           20
-#define   SPIROGRAPH_SPEED             60
-#define   DEFAULT_LINE_DRAW_TIME       15
-#define   DEFAULT_TURN_TIME            15
+
 
 uint8_t run_sketch_mode_1(void) 
 {

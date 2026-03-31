@@ -180,6 +180,11 @@
 #define     BLACK_WHITE_THRESHOLD     120     // lower for white, higher for black
 
 //----------------------------------------------------------------------------
+// Joystick modes defines
+//
+#define SPIN_SPEED		20
+
+//----------------------------------------------------------------------------
 // Line follow defines
 //
 #define LINE_BASE_SPEED 	        30
@@ -224,6 +229,15 @@
 #define LIGHT_INTEGRAL_WINDUP_LIMIT	10
 #define LIGHT_ERROR_GAIN		     4   // MUST be power of 2
 
+//----------------------------------------------------------------------------
+// Sketch mode defines
+//
+#define   SKETCH_MODE_0_TIME_OUT   50
+#define   sketch_MODE_1_TIME_OUT      (30 * TICKS_IN_ONE_SECOND) 
+#define   NOS_PATTTERN_LINES           20
+#define   SPIROGRAPH_SPEED             60
+#define   DEFAULT_LINE_DRAW_TIME       15
+#define   DEFAULT_TURN_TIME            15
 //----------------------------------------------------------------------------
 // 
 //
@@ -276,18 +290,6 @@
 #define     PULSES_BACKWARD     16
 
 #define     WHEEL_CONSTANT     153     // 1.53 pulses/cm
-
-//----------------------------------------------------------------------------
-// PID values
-//
-#define     I_MAX             10
-#define     I_MIN              0
-
-#define     P_GAIN_DEFAULT    40
-#define     I_GAIN_DEFAULT     3
-#define     D_GAIN_DEFAULT     2
-
-#define     E_GAIN_DEFAULT    10
      
 //----------------------------------------------------------------------------
 // error codes

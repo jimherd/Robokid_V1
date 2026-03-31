@@ -83,7 +83,7 @@ uint8_t    activity;
     } 
 }
 
-#define SPIN_SPEED		20
+
 
 //----------------------------------------------------------------------------
 // run_joystick_mode_1 : run vehicle mode with external simple joystick
