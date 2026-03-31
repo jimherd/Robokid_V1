@@ -1,0 +1,82 @@
+9/2/26
+======
+
+Updates to Robokid software, version B4
+
+1. Modified "line bunp" mode to give better effect.
+	a. Slow speed
+	b. Add pseudorandom number generator
+2. Added output on pin PTF6 to be used as oscilloscope log pin
+	a. Checked delay routines : all OK
+	b  Measured time in interrupt routine = 36uS. Good.
+	   May be slightly longer for some situations.
+	c. Checked : Internal bus clock is 4Mhz (approx)
+	   giving a bus cycle tine of 250nS.
+3. Added PID code to line follow mode 
+    a. Commented out original band/bang code
+    b. Note : Black tape = high, White paper = low
+    	i. Read by ADC and thresholded at 120
+    	ii. if < 120 set to 1 (WHITE)
+    	iii. if >= 120 set to 0 (BLACK)
+	c. First test with Kp=10, Ki=0, Kd=0
+		i. Internally Kp is set to 100 (int) and PID value is divided by 10
+		   This gives 1 decimal point of accuracy without using float variables
+
+10/2/26
+=======
+
+1. Set Kp to 250. 
+	a. Works, but oscillates. More aggressive than 100.
+	b. Reduce by 20% to give working value : Kp = 200
+2. Now to set Kd.
+	a. Set Kd to ??
+	
+14/02/26
+========
+
+1. Adding line regain code to cope with line lost state.
+   Problems?
+   
+16/02/26
+========
+
+1. Looking at using the two line sensors as analogue sensors rather than clamping then to digital values.
+2. A/D unit : 3.3v input, 8-bit conversion (capable of 10-bit)
+            : A/D value of BLACK tape :3.24v = (3.24/3.3)*2.55 = 250 (Digital `1`)
+            : A/D value of WHITE paper : 0.96v = (0.96/3.3)*255 = 74 (Digital `0`)
+            : Midpoint = ((250 - 74)/2) + 74 = 162
+            : Worst case error is (250 - 74) = 176
+            
+19/02/26
+========
+
+1. Added routine "set_motor_speed_dir" which takes two parameters
+	a. Motor code (LEFT_MOTOR or RIGHT_MOTOR)
+	b. +/- pwm value (direction set by the sign)
+2. Set PID scale value to 1000 (allows use of integer only arithmetic)
+	a. Kp set to 150 (i.e. 0.15 as a decimal)
+	b. Ki and Kd initially set to 0
+	c. Sample rate set to 50Hz (20mS period)
+	d. This gives
+		i. smooth follow of a straight line and curves
+		ii. able to turn a corner with a radius of 10cm
+	e. Execution time for the PID loop
+		i. Average : 112uS (occasional 147uS, due to time spent in 8mS interupt routine)
+	f. PID calculation arithmetic restricted to +/-32,767 (int16_t) (2^16 - 1)
+		i. Produced spreadsheet to calculate typical PID values (PID_line_follow.ods)
+		
+09/03/26
+========
+
+1. Reformated line follow code to use a state machine.
+2. PID values giving reasonable results
+	Kp = 30
+	Ki = 0
+	Kd = 30
+	Scale factor = 100 (used to allow calculation with integer values)
+	
+   Need to further tune to PID values
+3. Tried to implement "line lost" code, with limited success. Main problem is that using
+   only two sensors is insufficient to specify all vehicle condition uniquely.
+
+	
