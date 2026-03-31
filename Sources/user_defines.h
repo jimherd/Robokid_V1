@@ -385,17 +385,9 @@ typedef enum {
         WHEEL_SENSOR_L, WHEEL_SENSOR_R, REAR_SENSOR
 } a2d_channels_t;
  
+//----------------------------------------------------------------------------
+// Display codes and general modes
 //
-// list of different system modes
-//
-typedef enum {
-    JOYSTICK_MODE, ACTIVITY_MODE, BUMP_MODE, FOLLOW_MODE, PROGRAM_MODE, 
-    SKETCH_MODE, LAB_MODE, DISTANCE_MODE, EXPERIMENT_MODE
-} sys_modes_t;
-
-#define   FIRST_SYS_MODE  JOYSTICK_MODE
-#define   LAST_SYS_MODE   EXPERIMENT_MODE
-
 #define   INIT_MODE_CODE         'r'
 #define   JOYSTICK_MODE_CODE     'J'
 #define   ACTIVITY_MODE_CODE     'A'
@@ -407,6 +399,17 @@ typedef enum {
 #define   DISTANCE_MODE_CODE     'd'
 #define   EXPERIMENT_MODE_CODE   'E'
 
+typedef enum {
+    JOYSTICK_MODE, ACTIVITY_MODE, BUMP_MODE, FOLLOW_MODE, PROGRAM_MODE, 
+    SKETCH_MODE, LAB_MODE, DISTANCE_MODE, EXPERIMENT_MODE
+} sys_modes_t;
+
+#define   FIRST_SYS_MODE  JOYSTICK_MODE
+#define   LAST_SYS_MODE   EXPERIMENT_MODE
+
+//----------------------------------------------------------------------------
+// Joystick mode
+//
 typedef enum 
     { JOYSTICK_MODE_1, JOYSTICK_MODE_2, JOYSTICK_MODE_3
 } joystick_mode_t;
@@ -414,13 +417,19 @@ typedef enum
 #define   FIRST_JOYSTICK_MODE  JOYSTICK_MODE_1
 #define   LAST_JOYSTICK_MODE   JOYSTICK_MODE_3
 
+//----------------------------------------------------------------------------
+// Activity modes
+//
 typedef enum 
     { SIMPLE_TEST, RUN_BACKWARD, RUN_SPIN_RIGHT, RUN_SPIN_LEFT, RUN_TEST,  DEMO_MODE
 } activity_mode_t;
 
 #define   FIRST_ACTIVITY_MODE  SIMPLE_TEST
 #define   LAST_ACTIVITY_MODE   DEMO_MODE
-    
+   
+//----------------------------------------------------------------------------
+// Bump modes
+// 
 typedef enum 
     { LINE_BUMP_MODE, LINE_BUG_BUMP_MODE, WALL_BUMP_MODE 
 } bump_mode_t;
@@ -428,17 +437,19 @@ typedef enum
 #define   FIRST_BUMP_MODE  LINE_BUMP_MODE
 #define   LAST_BUMP_MODE   WALL_BUMP_MODE
 
+//----------------------------------------------------------------------------
+// Follow modes
+// 
 typedef enum 
     { LINE_FOLLOW_MODE, LIGHT_FOLLOW_MODE
 } follow_mode_t;
 
-typedef enum 
-    { TAPE_MANUAL_MODE, TAPE_MOTOR_MODE
-} program_mode_t;
-
 #define   FIRST_FOLLOW_MODE  LINE_FOLLOW_MODE
 #define   LAST_FOLLOW_MODE   LIGHT_FOLLOW_MODE
 
+//----------------------------------------------------------------------------
+// Program modes
+// 
 typedef enum 
     { PROGRAM_MODE_0, PROGRAM_MODE_1, PROGRAM_MODE_2, PROGRAM_MODE_3, 
 } program_mode_t;
@@ -451,6 +462,14 @@ typedef enum {PLAY, COLLECT, SAVE, RECALL, DUMP} sequence_mode_t;
 #define   FIRST_SEQUENCE_MODE    PLAY
 #define   LAST_SEQUENCE_MODE     DUMP
 
+
+typedef enum 
+    { TAPE_MANUAL_MODE, TAPE_MOTOR_MODE
+} program_mode_t;
+
+//----------------------------------------------------------------------------
+// Sketch modes
+// 
 typedef enum 
     { SKETCH_MODE_0, SKETCH_MODE_1, SKETCH_MODE_2
 } drawing_mode_t;
@@ -458,10 +477,19 @@ typedef enum
 #define   FIRST_SKETCH_MODE  SKETCH_MODE_0
 #define   LAST_SKETCH_MODE   SKETCH_MODE_2
 
+//----------------------------------------------------------------------------
+// Lab modes
+// 
 typedef enum 
     { LAB_MODE_0, LAB_MODE_1, LAB_MODE_2
 } lab_mode_t;
 
+#define   FIRST_LAB_MODE  LAB_MODE_0
+#define   LAST_LAB_MODE   LAB_MODE_2
+
+//----------------------------------------------------------------------------
+// Distance modes
+// 
 typedef enum 
     { DISTANCE_MODE_0, DISTANCE_MODE_1, DISTANCE_MODE_2
 } distance_mode_t;
@@ -469,9 +497,9 @@ typedef enum
 #define   FIRST_DISTANCE_MODE  DISTANCE_MODE_0
 #define   LAST_DISTANCE_MODE   DISTANCE_MODE_2
 
-#define   FIRST_LAB_MODE  LAB_MODE_0
-#define   LAST_LAB_MODE   LAB_MODE_2
-
+//----------------------------------------------------------------------------
+// Experiment modes
+// 
 typedef enum 
     { CYCLE_DISPLAYS
 } experiment_mode_t;
@@ -479,7 +507,7 @@ typedef enum
 #define   FIRST_EXPERIMENT_MODE  CYCLE_DISPLAYS
 #define   LAST_EXPERIMENT_MODE   9
 
-
+//----------------------------------------------------------------------------
 #define   RAM_SEQUENCE_SIZE    100
 
 #endif
