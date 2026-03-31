@@ -32,7 +32,7 @@
 //----------------------------------------------------------------------------
 // Macros
 // ======
-//
+//----------------------------------------------------------------------------
 // sound macros
 //
 #define     SOUND_TAPE_BUMP          play_tune(&snd_bump);
@@ -92,6 +92,9 @@
 #define CLEAR_LOG_PIN		{ asm bclr  6,PTFD;}
 
 //----------------------------------------------------------------------------
+// Defines
+// =======
+//----------------------------------------------------------------------------
 // System modes
 //
 #define INITIALISING 	0
@@ -114,19 +117,16 @@
 #define  STRIP_PLAY_FORWARD_SPEED  75
 
 //----------------------------------------------------------------------------
-// system clock
-//
-#define BUSCLK  20000000  //Bus clock frequency (Hz)
-
-//----------------------------------------------------------------------------
 // timing defines
 //
+#define     BUSCLK  20000000  //Bus clock frequency (Hz). System Clock
+
 #define     PWM_FREQ    5000                // PWM set to 5kHz for motors
 #define     PWM_COUNT   (BUSCLK/PWM_FREQ)   // main PWM count to give PWM_FREQ
 
 #define     TICK_TIME_IN_MS          8
 #define     TICKS_IN_ONE_SECOND    (1000/TICK_TIME_IN_MS)
-//
+
 #define     BAUD        57600               // Baud rate (BPS)
 
 #define     MOTOR_TEST_TIME_OUT     (6 * TICKS_IN_ONE_SECOND)
@@ -138,7 +138,21 @@
 #define     WAIT_1SEC       DelayMs(1000);
 
 //----------------------------------------------------------------------------
-// 
+// Battery
+//
+#define     CRITICAL_BATTERY_THRESHOLD  150
+#define     LOW_BATTERY_THRESHOLD       170     // 4.4v level
+
+//----------------------------------------------------------------------------
+// Switches
+//
+#define     SWITCH_SAMPLES   	3     // number of samples to debounce push switches
+#define     PRESSED        		0
+#define     RELEASED       		1
+#define     ALL_RELEASED   0b00111100 
+
+//----------------------------------------------------------------------------
+// Joystick switch values (Read by A/D)
 //
 #define     FORWARD_VALUE    129
 #define     BACKWARD_VALUE     0
@@ -160,12 +174,59 @@
 #define     NO_BUMP     255
 #define     YES_BUMP      0
 
+
 #define     YES_LINE                  230
 #define     NO_LINE                    60
 #define     BLACK_WHITE_THRESHOLD     120     // lower for white, higher for black
 
-#define     SWITCH_SAMPLES     3     // number of samples to debounce push switches
+//----------------------------------------------------------------------------
+// Line follow defines
+//
+#define LINE_BASE_SPEED 	        30
+#define TIME_SCALE_FACTOR          100
 
+#define LINE_FOLLOW_SAMPLE_TIME		20   // milliseconds
+#define DELTA_T          (LINE_FOLLOW_SAMPLE_TIME * TIME_SCALE_FACTOR)
+
+#define PWM_DEADBAND  5   // L/R_pwn difference must be greater to imply turn
+
+#define LINE_KP_INT	  	        	 30
+#define LINE_KI_INT		 		      5
+#define LINE_KD_INT	     	   		 30
+#define LINE_INTEGRAL_WINDUP_LIMIT	 10
+
+#define LINE_VALUE_WHITE 			 74
+#define LINE_VALUE_BLACK	    	250
+#define LINE_VALUE_THRESHOLD        ((LINE_VALUE_BLACK + LINE_VALUE_WHITE) >> 1)
+#define LINE_NEAR_WHITE				100
+#define LINE_NEAR_BLACK				200
+
+#define DEFAULT_LINE_FOLLOW_SPEED    40
+#define LINE_LOST_THRESHOLD			 100 // WW counts threshold for lost state to be triggered
+
+#define CLEAR_LINE_TIME_MS          100  // ensure robot is past line before turn in
+#define SPIN_TIMEOUT                500  // units of sample times (Typ 20mS)
+#define FIND_LINE_LOOP_COUNT		  3
+
+#define TIMEOUT_1					(20 * (TICKS_IN_ONE_SECOND))
+#define TIMEOUT_2					(3 * (TICKS_IN_ONE_SECOND))
+
+//----------------------------------------------------------------------------
+// Light follow defines
+//
+#define DEFAULT_LIGHT_SAMPLE_TIME   20   // mS
+#define BASE_LIGHT_FOLLOW_PWM       40	// % of full speed
+#define DEFAULT_AMBIENT             30 
+
+#define LIGHT_KP_INT	  	        50
+#define LIGHT_KI_INT		 		 0
+#define LIGHT_KD_INT	     		 0
+#define LIGHT_INTEGRAL_WINDUP_LIMIT	10
+#define LIGHT_ERROR_GAIN		     4   // MUST be power of 2
+
+//----------------------------------------------------------------------------
+// 
+//
 #define     DEFAULT_SPEED             50    // % of full speed
 #define     LINE_BUMP_SPEED           35    // CHANGE for B4
 #define     DEFAULT_REVERSE_TIME       3
@@ -173,12 +234,10 @@
 #define     SPEED_DIFFERENTIAL        12   // ADDED for B4
 #define     DEFAULT_PWM               60
 
-
-#define     LIGHT_FOLLOW_SPEED        40
 #define     SLOW_SPEED                40
 
 #define     DEFAULT_DEADBAND          10
-#define     DEFAULT_AMBIENT           30 
+
 
 #define     FLASH_ERASE_STATE       0xff
 
@@ -186,8 +245,7 @@
 
 #define     MAX_EXPERIMENT     9
 
-#define     CRITICAL_BATTERY_THRESHOLD  150
-#define     LOW_BATTERY_THRESHOLD       170     // 4.4v level
+
 
 #define     MAX_STRIP_CMDS     30
 
@@ -231,13 +289,6 @@
 
 #define     E_GAIN_DEFAULT    10
      
-//----------------------------------------------------------------------------
-// switch values
-//
-#define     PRESSED        0
-#define     RELEASED       1
-#define     ALL_RELEASED   0b00111100 
-
 //----------------------------------------------------------------------------
 // error codes
 //

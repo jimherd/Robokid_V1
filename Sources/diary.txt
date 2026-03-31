@@ -22,9 +22,13 @@ Updates to Robokid software, version B4
 		i. Internally Kp is set to 100 (int) and PID value is divided by 10
 		   This gives 1 decimal point of accuracy without using float variables
 
-10/2/26
+31/3/26
 =======
 
+* Renamed project from "bot_code" to "Robokid_V1"
+* Deleted old ".git" directory and created new ".git"
+* Initial commit
+* ??? To create Github version ???
 1. Set Kp to 250. 
 	a. Works, but oscillates. More aggressive than 100.
 	b. Reduce by 20% to give working value : Kp = 200

@@ -82,15 +82,6 @@ uint8_t     activity;
     } 
 }
 
-
-#define LINE_BASE_SPEED 	        30
-#define TIME_SCALE_FACTOR          100
-
-#define LINE_FOLLOW_SAMPLE_TIME		20   // milliseconds
-#define DELTA_T          (LINE_FOLLOW_SAMPLE_TIME * TIME_SCALE_FACTOR)
-
-#define PWM_DEADBAND  5   // L/R_pwn difference must be greater to imply turn
-
 //----------------------------------------------------------------------------
 // run_follow_line_mode : run vehicle mode with 2 line follow sensors
 // ====================
@@ -121,26 +112,6 @@ uint8_t     activity;
 //      Thus the gain values are larger than would be expected
 //      
 
-#define LINE_KP_INT	  	        	 30
-#define LINE_KI_INT		 		      5
-#define LINE_KD_INT	     	   		 30
-#define LINE_INTEGRAL_WINDUP_LIMIT	 10
-
-#define LINE_VALUE_WHITE 			 74
-#define LINE_VALUE_BLACK	    	250
-#define LINE_VALUE_THRESHOLD        ((LINE_VALUE_BLACK + LINE_VALUE_WHITE) >> 1)
-#define LINE_NEAR_WHITE				100
-#define LINE_NEAR_BLACK				200
-
-#define DEFAULT_LINE_FOLLOW_SPEED    40
-#define LINE_LOST_THRESHOLD			 100 // WW counts threshold for lost state to be triggered
-
-#define CLEAR_LINE_TIME_MS          100  // ensure robot is past line before turn in
-#define SPIN_TIMEOUT                500  // units of sample times (Typ 20mS)
-#define FIND_LINE_LOOP_COUNT		  3
-
-#define TIMEOUT_1					(20 * (TICKS_IN_ONE_SECOND))
-#define TIMEOUT_2					(3 * (TICKS_IN_ONE_SECOND))
 
 uint8_t run_follow_line_mode(void) {
 
@@ -553,15 +524,6 @@ int16_t       p_term, i_term, d_term, PID_correction, left_pwm, save_left_pwm, r
 //          POT_3 : sample rate   -  0->200mS
 //
 
-#define DEFAULT_LIGHT_SAMPLE_TIME   20   // mS
-#define BASE_LIGHT_FOLLOW_PWM       40	// % of full speed
-
-#define LIGHT_KP_INT	  	        50
-#define LIGHT_KI_INT		 		 0
-#define LIGHT_KD_INT	     		 0
-#define LIGHT_INTEGRAL_WINDUP_LIMIT	10
-#define LIGHT_ERROR_GAIN		     4   // MUST be power of 2
-
 uint8_t run_follow_light_mode(void) {
 
 uint8_t       L_light, R_light, L_ambient, R_ambient, ambient_diff;
@@ -736,89 +698,3 @@ int16_t       p_term, i_term, d_term, PID_correction, left_pwm, right_pwm;
                    
     }        // end of FOREVER loop
 }
-
-
-
-
-
-	/*
-//
-// P calculation : P = error * Kp
-//
-		p_term = error * LINE_KP_INT;
-//
-// I calculation : integral * Ki
-//                 with integral windup protection
-//
-		integral += error;
-		if (integral > LINE_INTEGRAL_WINDUP_LIMIT) {
-			integral = LINE_INTEGRAL_WINDUP_LIMIT;
-		}
-		if (integral < -LINE_INTEGRAL_WINDUP_LIMIT) {
-			integral = -LINE_INTEGRAL_WINDUP_LIMIT;
-		}
-		i_term = integral * LINE_KI_INT * DELTA_T;
-//
-// D calculation : D = (Current error - error) * Kd
-//
-		d_term = ((error - last_error) * LINE_KD_INT);   // / DELTA_T;
-//
-// Calculate PID correction and rescale
-//
-		PID_correction = (p_term + i_term + d_term) / TIME_SCALE_FACTOR;
-		
-		last_error = error;	
-		
-//
-// Calculate pwm values and clamp to 0 -> 100%
-//
-		left_pwm = DEFAULT_LINE_FOLLOW_SPEED - PID_correction;		
-		right_pwm = DEFAULT_LINE_FOLLOW_SPEED + PID_correction;
-//
-// clamp PWM values to +/- 100%
-//
-		if (left_pwm > 100) {
-			left_pwm = 100;
-		} else {
-			if (left_pwm < -100) {
-				left_pwm = -100;
-			}
-		}
-		if (right_pwm > 100) {
-			right_pwm = 100;
-		} else {
-			if (right_pwm < -100) {
-				right_pwm = -100;
-			}
-		}
-//
-// set motors. Allow motors to reverse.
-//
-		set_motor_speed_dir(LEFT_MOTOR, (uint8_t)left_pwm);
-		set_motor_speed_dir(RIGHT_MOTOR, (uint8_t)right_pwm);
-//
-// Update vehicle direction state (reverse need not be considered)
-//
-		if (abs((uint8_t)PID_correction) < PWM_DEADBAND ) {
-			drive_mode = V_FORWARD;
-		} else {
-			if (left_pwm > right_pwm) {
-				drive_mode = V_FORWARD_TURN_RIGHT;
-			} else {
-				drive_mode = V_FORWARD_TURN_LEFT;
-			}
-		}
-//
-// wait until next sample time
-//
-		CLEAR_LOG_PIN;
-        DelayMs(LINE_FOLLOW_SAMPLE_TIME);
-        
-        
-    }  // end of FOREVER loop
-}
-
-*/
-
-
-
