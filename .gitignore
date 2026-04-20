@@ -2,6 +2,7 @@
 ## Codewarrior
 #################
 
+*.o
 *.d
 *.args
 *.prefs
